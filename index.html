@@ -3,225 +3,88 @@
   <head>
     <meta charset="UTF-8" />
     <title>Giới thiệu nhóm & Lab 2</title>
-    <!-- Giữ nguyên liên kết file CSS cũ của bạn -->
     <link rel="stylesheet" href="style.css" />
-    <!--[cite: 1] -->
-
-    <!-- Nhúng thư viện Firebase SDK để chạy tính năng xác thực -->
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
   </head>
   <body>
-    <!-- KHỐI 1: GIAO DIỆN ĐĂNG NHẬP (Mặc định hiển thị khi chưa login) -->
-    <div id="login-container" style="text-align: center; margin-top: 100px">
-      <h1>HỆ THỐNG KIỂM SOÁT TRUY CẬP WEBSITE</h1>
-      <p>Vui lòng đăng nhập tài khoản Google được cấp quyền để xem nội dung.</p>
-      <button
-        id="btn-login"
-        style="
-          padding: 12px 24px;
-          font-size: 16px;
-          cursor: pointer;
-          background-color: #4285f4;
-          color: white;
-          border: none;
-          border-radius: 5px;
-          font-weight: bold;
-        "
-      >
-        Đăng nhập bằng Google
-      </button>
-      <p
-        id="error-message"
-        style="color: red; margin-top: 15px; font-weight: bold"
-      ></p>
-    </div>
+    <h1>GIỚI THIỆU NHÓM & BÁO CÁO LAB 2</h1>
 
-    <!-- KHỐI 2: NỘI DUNG CHÍNH WEBSITE (Mặc định bị ẩn bằng display:none) -->
-    <div id="main-content" style="display: none">
-      <!-- Thanh điều hướng thông tin user và nút logout -->
-      <div
-        style="
-          text-align: right;
-          padding: 10px;
-          background-color: #f5f5f5;
-          border-bottom: 1px solid #ddd;
-        "
-      >
-        <span
-          id="user-info"
-          style="font-weight: bold; margin-right: 15px"
-        ></span>
-        <button
-          id="btn-logout"
-          style="
-            padding: 5px 10px;
-            cursor: pointer;
-            background-color: #d9534f;
-            color: white;
-            border: none;
-            border-radius: 3px;
-          "
-        >
-          Đăng xuất
-        </button>
-      </div>
+    <h2>Thành viên</h2>
+    <p>1. Đoàn Quang Tín - MSSV: 23004052</p>
+    <p>2. Trang Sĩ Nhật Huy - MSSV: 23004057</p>
+    <h2>Nội dung chính</h2>
+    <p>
+      Tìm hiểu GitHub và Cloudflare Pages, tạo website tĩnh và triển khai lên
+      Internet.
+    </p>
+    <hr />
 
-      <h1>GIỚI THIỆU NHÓM & BÁO CÁO LAB 2</h1>
-      <!--[cite: 1] -->
+    <h2>BÁO CÁO LAB 2: CLOUDFLARE ZERO TRUST / ACCESS</h2>
 
-      <h2>Thành viên</h2>
-      <!--[cite: 1] -->
-      <p>1. Đoàn Quang Tín - MSSV: 23004052</p>
-      <!--[cite: 1] -->
-      <p>2. Trang Sĩ Nhật Huy - MSSV: 23004057</p>
-      <!--[cite: 1] -->
+    <h3>1. Nhật ký kiểm thử an toàn (Đánh giá Đạt loại A)</h3>
+    <ul>
+      <li>
+        <strong>SSL/TLS TLS 1.3:</strong> Đã kích hoạt (Mã hóa toàn vẹn dữ liệu
+        truyền tải trên hệ thống Cloudflare Edge).
+      </li>
+      <li>
+        <strong>HTTP Strict Transport Security (HSTS):</strong> Đã bật để ép
+        buộc trình duyệt luôn dùng HTTPS, chống tấn công hạ cấp (Downgrade
+        Attack).
+      </li>
+      <li>
+        <strong>Cloudflare Access:</strong> Hoạt động như một Reverse Proxy đứng
+        trước website tĩnh để kiểm tra danh tính trước khi truyền tải gói tin.
+      </li>
+    </ul>
 
-      <h2>Nội dung chính</h2>
-      <!--[cite: 1] -->
-      <p>
-        Tìm hiểu GitHub và Cloudflare Pages, tạo website tĩnh và triển khai lên
-        Internet.
-      </p>
-      <!--[cite: 1] -->
-
-      <hr />
-
-      <h2>BÁO CÁO LAB 2: XÁC THỰC DANH TÍNH BẰNG FIREBASE AUTH</h2>
-
-      <h3>1. Nhật ký kiểm thử an toàn</h3>
-      <ul>
-        <li>
-          <strong>Cơ chế kiểm soát:</strong> Sử dụng Firebase Authentication làm
-          Khối xác thực danh tính để thay thế cho Cloudflare Access.
-        </li>
-        <li>
-          <strong>Chính sách phân quyền (Authorization):</strong> Áp dụng chính
-          sách duyệt danh sách trắng (Whitelist Email) trực tiếp trên
-          Client-side thông qua JavaScript để lọc người dùng hợp lệ.
-        </li>
-      </ul>
-
-      <h3>2. Ghi nhận hành vi hệ thống khi kiểm thử</h3>
-      <table
-        border="1"
-        cellpadding="10"
-        style="border-collapse: collapse; width: 100%"
-      >
-        <thead>
-          <tr style="background-color: #f2f2f2">
-            <th>Kịch bản kiểm thử</th>
-            <th>Hành vi thực tế của Website thu được</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>
-              <strong>Chưa xác thực</strong><br />(Truy cập lần đầu / Ẩn danh)
-            </td>
-            <td>
-              Nội dung trang web bị ẩn hoàn toàn (khối
-              <code>#main-content</code> nhận thuộc tính
-              <code>display: none</code>). Giao diện chỉ hiển thị duy nhất form
-              bắt buộc "Đăng nhập bằng Google".
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <strong>Xác thực sai</strong><br />(Dùng tài khoản nằm ngoài danh
-              sách Policy)
-            </td>
-            <td>
-              Sau khi đăng nhập tài khoản Google thành công, script kiểm tra
-              email thấy không nằm trong danh sách nhóm. Hệ thống lập tức kích
-              hoạt lệnh <code>signOut()</code> tự động và hiển thị dòng chữ báo
-              lỗi màu đỏ công khai: "Truy cập bị từ chối!"
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <strong>Xác thực đúng</strong><br />(Đăng nhập đúng tài khoản cấu
-              hình trong danh sách)
-            </td>
-            <td>
-              Hệ thống Firebase trả về trạng thái hợp lệ, script ẩn khối đăng
-              nhập đi, thay đổi trạng thái khối nội dung thành
-              <code>display: block</code>. Website hiển thị toàn bộ nội dung báo
-              cáo thành công.
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- KHỐI LOGIC XỬ LÝ JAVASCRIPT -->
-    <script>
-      // ĐOẠN 1: CẤU HÌNH FIREBASE (Thay thế các thông số bên dưới bằng mã ở Bước 3 của bạn)
-      const firebaseConfig = {
-        apiKey: "AIzaSyCOG9YWjA0MsWyzkV3VJ2HAscnJVJG_RBU",
-        authDomain: "access-lab2-8e521.firebaseapp.com",
-        projectId: "access-lab2-8e521",
-        storageBucket: "access-lab2-8e521.firebasestorage.app",
-        messagingSenderId: "872218571314",
-        appId: "1:872218571314:web:feae5fe623c35043dc422b",
-        measurementId: "G-ZXZCTH5LP2",
-      };
-
-      // Khởi tạo ứng dụng Firebase
-      firebase.initializeApp(firebaseConfig);
-      const auth = firebase.auth();
-
-      // ĐOẠN 2: DANH SÁCH EMAIL ĐƯỢC PHÉP TRUY CẬP (Thay email thật của bạn và Huy vào đây)
-      const allowedEmails = [
-        "23004052@st.vlute.edu.vn",
-        "23004057@st.vlute.edu.vn",
-      ];
-
-      // Lấy các phần tử giao diện
-      const loginContainer = document.getElementById("login-container");
-      const mainContent = document.getElementById("main-content");
-      const btnLogin = document.getElementById("btn-login");
-      const btnLogout = document.getElementById("btn-logout");
-      const userInfo = document.getElementById("user-info");
-      const errorMsg = document.getElementById("error-message");
-
-      // Xử lý sự kiện khi bấm nút Đăng nhập
-      btnLogin.addEventListener("click", () => {
-        const provider = new firebase.auth.GoogleAuthProvider();
-        auth.signInWithPopup(provider).catch((error) => {
-          errorMsg.innerText = "Lỗi đăng nhập: " + error.message;
-        });
-      });
-
-      // Xử lý sự kiện khi bấm nút Đăng xuất
-      btnLogout.addEventListener("click", () => {
-        auth.signOut();
-      });
-
-      // Lắng nghe và kiểm tra trạng thái đăng nhập của người dùng
-      auth.onAuthStateChanged((user) => {
-        if (user) {
-          // KHỐI KIỂM TRA QUYỀN TRUY CẬP (Authorization / Policy)
-          if (allowedEmails.includes(user.email)) {
-            // Trường hợp: XÁC THỰC ĐÚNG
-            errorMsg.innerText = "";
-            loginContainer.style.display = "none";
-            mainContent.style.display = "block";
-            userInfo.innerText = "Xin chào, " + user.displayName;
-          } else {
-            // Trường hợp: XÁC THỰC SAI (Có tài khoản Google nhưng không được phân quyền)
-            errorMsg.innerText =
-              "Từ chối truy cập: Tài khoản " +
-              user.email +
-              " không có trong hệ thống!";
-            auth.signOut(); // Trục xuất tài khoản ra ngoài lập tức
-          }
-        } else {
-          // Trường hợp: CHƯA XÁC THỰC
-          loginContainer.style.display = "block";
-          mainContent.style.display = "none";
-        }
-      });
-    </script>
+    <h3>2. Ghi nhận hành vi hệ thống khi kiểm thử</h3>
+    <table
+      border="1"
+      cellpadding="10"
+      style="border-collapse: collapse; width: 100%"
+    >
+      <thead>
+        <tr style="background-color: #f2f2f2">
+          <th>Kịch bản kiểm thử</th>
+          <th>Hành vi thực tế của Website thu được</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <strong>Chưa xác thực</strong><br />(Truy cập lần đầu / Trình duyệt
+            ẩn danh)
+          </td>
+          <td>
+            Trình duyệt tự động bị hệ thống Cloudflare chặn đứng ở tầng Edge và
+            chuyển hướng (Redirect 302) về trang đăng nhập tập trung của
+            Cloudflare Access. Không thể tải nội dung của trang web tĩnh.
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <strong>Xác thực sai</strong><br />(Dùng tài khoản nằm ngoài danh
+            sách Policy)
+          </td>
+          <td>
+            Sau khi đăng nhập GitHub thành công, hệ thống đối chiếu Policy thấy
+            sai email và lập tức hiển thị màn hình báo lỗi
+            <code>403 Forbidden</code> hoặc <code>Access Denied</code> của
+            Cloudflare.
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <strong>Xác thực đúng</strong><br />(Đăng nhập đúng tài khoản cấu
+            hình trong danh sách)
+          </td>
+          <td>
+            Cloudflare Access cấp mã JWT Token lưu dưới dạng Cookie trên trình
+            duyệt, mở khóa tường lửa và cho phép Request đi tiếp vào Cloudflare
+            Pages. Website hiển thị toàn bộ nội dung thành công (Mã 200 OK).
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </body>
 </html>
